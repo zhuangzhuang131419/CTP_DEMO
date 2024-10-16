@@ -147,6 +147,22 @@ class CTradeSpi(api.CThostFtdcTraderSpi):
 		print ("OnRspOrderInsert")
 		print ("ErrorID=",pRspInfo.ErrorID)
 		print ("ErrorMsg=",pRspInfo.ErrorMsg)
+
+
+	def OnRspQryTrade(self, pTrade: "CThostFtdcTradeField", pRspInfo: "CThostFtdcRspInfoField", nRequestID: "int", bIsLast: "bool") -> "void":
+		print("OnRspQryTrade")
+		print("ErrorID",pRspInfo.ErrorID)
+		print("ErrorMsg",pRspInfo.ErrorMsg)
+
+	def OnRspQryTradingAccount(self, pTradingAccount: "CThostFtdcTradingAccountField", pRspInfo: "CThostFtdcRspInfoField", nRequestID: "int", bIsLast: "bool") -> "void":
+		print("OnRspQryTradingAccount")
+		print("ErrorID", pRspInfo.ErrorID)
+		print("ErrorMsg", pRspInfo.ErrorMsg)
+
+	def OnRspOrderAction(self, pInputOrderAction: "CThostFtdcInputOrderActionField", pRspInfo: "CThostFtdcRspInfoField", nRequestID: "int", bIsLast: "bool") -> "void":
+		print("OnRspOrderAction")
+		print("ErrorID", pRspInfo.ErrorID)
+		print("ErrorMsg", pRspInfo.ErrorMsg)
 		
 def main():
 	tradeapi=api.CThostFtdcTraderApi_CreateFtdcTraderApi()
@@ -158,6 +174,18 @@ def main():
 	tradeapi.RegisterFront(FrontAddr)	
 	tradeapi.Init()
 	tradeapi.Join()
+
+	# 请求查询成交
+	tradeapi.ReqQryTrade()
+
+	# 查询资金账户
+	tradeapi.ReqQryTradingAccount()
+
+	# 撤单
+	tradeapi.ReqQrderAction()
+
+
+
 	
 if __name__ == '__main__':
 	main()
