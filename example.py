@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # put ThostFtdcApi to one of sys.path first
+from ThostFtdcApiSOpt import CThostFtdcInputOrderField
+
 try:
     import sys, ThostFtdcApiSOpt as api
     import traceback
@@ -56,7 +58,18 @@ def ReqorderfieldInsert(tradeapi):
 	orderfield.IsAutoSuspend = 0
 	tradeapi.ReqOrderInsert(orderfield,0)
 	print ("ReqOrderInsert End")
-	
+
+def ReqQueryTrade(tradeapi):
+	print("ReqQueryTrade Start")
+	tradefield = api.CThostFtdcQryTradeField()
+	tradefield.BrokerID = BROKERID
+	tradefield.InvestorID = USERID
+	tradefield.InstrumentID = INSTRUMENTID
+	tradefield.ExchangeID = INSTRUMENTID
+	# tradefield.TradeID = ""
+	# tradefield.TradeTimeStart =
+	tradeapi.ReqQryTrade(tradefield, 0)
+	print("ReqQueryTrade End")
 
 class CTradeSpi(api.CThostFtdcTraderSpi):
 	tapi=''
@@ -175,8 +188,9 @@ def main():
 	tradeapi.Init()
 	tradeapi.Join()
 
+
 	# 请求查询成交
-	tradeapi.ReqQryTrade()
+	ReqQueryTrade(tradeapi)
 
 	# 查询资金账户
 	tradeapi.ReqQryTradingAccount()
