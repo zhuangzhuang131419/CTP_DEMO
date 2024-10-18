@@ -25,11 +25,11 @@ PASSWORD="888888"
 APPID="client_LEE121_T1"
 AUTHCODE="3WWJKJ"
 #OrderInfo
-INSTRUMENTID="rb1909"
-PRICE=3200
+INSTRUMENTID="130090003855"
+PRICE=0.01
 VOLUME=1
-DIRECTION=api.THOST_FTDC_D_Sell
-#DIRECTION=api.THOST_FTDC_D_Buy
+# DIRECTION=api.THOST_FTDC_D_Sell
+DIRECTION=api.THOST_FTDC_D_Buy
 #open
 OFFSET="0"
 #close
@@ -61,15 +61,35 @@ def ReqorderfieldInsert(tradeapi):
 
 def ReqQueryTrade(tradeapi):
 	print("ReqQueryTrade Start")
-	tradefield = api.CThostFtdcQryTradeField()
-	tradefield.BrokerID = BROKERID
-	tradefield.InvestorID = USERID
-	tradefield.InstrumentID = INSTRUMENTID
-	tradefield.ExchangeID = INSTRUMENTID
+	query_trade_field = api.CThostFtdcQryTradeField()
+	query_trade_field.BrokerID = BROKERID
+	query_trade_field.InvestorID = USERID
+	query_trade_field.InstrumentID = INSTRUMENTID
+	query_trade_field.ExchangeID = INSTRUMENTID
 	# tradefield.TradeID = ""
 	# tradefield.TradeTimeStart =
-	tradeapi.ReqQryTrade(tradefield, 0)
+	tradeapi.ReqQryTrade(query_trade_field, 0)
 	print("ReqQueryTrade End")
+
+def ReqQryTradingAccount(tradeapi):
+	print("ReqQryTradingAccount Start")
+	trading_account_field = api.CThostFtdcTradingAccountField()
+	trading_account_field.BrokerID = BROKERID
+	trading_account_field.InvestorID = USERID
+	trading_account_field.CurrencyID = "CNY"
+	tradeapi.ReqQryTradingAccount(trading_account_field)
+	print("ReqQryTradingAccount End")
+
+def ReqQryOrder(tradeapi):
+	print("ReqQryOrder Start")
+	query_order_field = api.CThostFtdcQryOrderField()
+	query_order_field.BrokerID = BROKERID
+	query_order_field.InvestorID = USERID
+	query_order_field.ExchangeID = INSTRUMENTID
+	tradeapi.ReqQryOrder(query_order_field)
+	print("ReqQryOrder End")
+
+
 
 class CTradeSpi(api.CThostFtdcTraderSpi):
 	tapi=''
